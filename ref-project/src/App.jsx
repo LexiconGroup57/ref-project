@@ -1,23 +1,20 @@
-
 import './App.css'
+import Menu from "./components/Menu.jsx";
+import {menuItems} from "./siteconfigurations/navigation.js";
+import Table from "./components/Table.jsx";
 import Parrot from "./components/Parrot.jsx";
-import Cage from "./components/Cage.jsx";
-import Feather from "./components/Feather.jsx";
 
-export const Helper = () => {
-    return ""
-}
 
 function App() {
 
-    const caught = true;
-
   return (
     <>
-        <Parrot />
-        {caught ? <Cage>
-            { 4 + 7 }
-        </Cage> : <Feather />}
+        <Menu styling={"menu"} entries={menuItems}/>
+        <Table details={"five"}>
+            <h1>Table</h1>
+            <Parrot />
+            <p>Yet more text { 45 + 23 }</p>
+        </Table>
     </>
   )
 }

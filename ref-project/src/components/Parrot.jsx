@@ -6,6 +6,7 @@ const Parrot = () => {
     return (
         <div className="parrot">
             <a href="https://vite.dev" target="_blank">
+                <img src="./images/vite.svg" className="logo react" alt="Vite logo" />
             </a>
             <a href="https://react.dev" target="_blank">
                 <img src={reactLogo} className="logo react" alt="React logo" />
