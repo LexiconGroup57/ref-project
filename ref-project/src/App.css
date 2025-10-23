@@ -7,3 +7,15 @@
 .menu li {
     padding-right: 40px;
 }
+
+.menu button {
+    background-color: hsl(207, 100%, 67%);
+    color: white;
+    border: none;
+    padding: 4px;
+}
+
+
+.menu .clicked {
+    background-color: hsl(259, 100%, 57%);
+}

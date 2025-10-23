@@ -1,10 +1,18 @@
 import React from 'react';
 
-const Menu = (props) => {
+const Menu = ({styling, entries, setNavigation, navigation}) => {
 
     return (
-        <ul className={props.styling}>
-            {props.entries.map((entry) => <li key={entry.index}>{entry.content}</li>)}
+        <ul className={styling}>
+            {entries.map((entry) =>
+                <li key={entry.index}>
+                    <button
+                        onClick={() => setNavigation(entry.index)}
+                        className={navigation === entry.index ? "clicked" : ""}
+                    >
+                        {entry.content}
+                    </button>
+                </li>)}
         </ul>
     );
 };
