@@ -19,3 +19,11 @@
 .menu .clicked {
     background-color: hsl(259, 100%, 57%);
 }
+
+.rowdata {
+    display: flex;
+}
+
+.rowdata p {
+    padding-right: 100px;
+}
