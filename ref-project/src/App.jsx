@@ -15,6 +15,11 @@ import axios from "axios";
 
 function App() {
 
+    // const [author, setAuthor] = useState(null);
+    const [searchForm, setSearchForm] = useState({
+        authorFirstName: "",
+        authorLastName: "",
+    });
     const [navigation, setNavigation] = useState(4);
     const [backendData, setBackendData] = useState([]);
     const [search, setSearch] = useState(null);
@@ -44,6 +49,11 @@ function App() {
         default:
             return <h1>Default</h1>
     }};
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setSearchString(`http://libris.kb.se/xsearch?query=forf:(${searchForm.authorFirstName + "+" + searchForm.authorLastName})&format=json`)
+    }
 
 
   return (
@@ -79,6 +89,14 @@ function App() {
         <button onClick={() => {
             setSearchString("http://libris.kb.se/xsearch?query=forf:(Rem+Koolhaas)&format=json")
         }}>Search for Rem Koolhaas</button>
+        <form onSubmit={handleSubmit}>
+            <label name="author-firstname">Author: </label>
+            <input type="text" id="author-firstname" name="author-firstname"
+                   onChange={(e) => {setSearchForm({...searchForm, authorFirstName: e.target.value})}}
+                  // onChange={(e) => {setSearchForm(e.target.value)}}
+                   value={searchForm.authorFirstName}/>
+            <input type="submit" value="Submit" />
+        </form>
         <Table details={"five"}>
             <h1>Table</h1>
             <Parrot />
