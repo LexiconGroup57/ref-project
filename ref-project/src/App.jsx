@@ -1,7 +1,6 @@
 import './App.css'
 import Menu from "./components/Menu.jsx";
 import {menuItems} from "./siteconfigurations/navigation.js";
-import Table from "./components/Table.jsx";
 import Parrot from "./components/Parrot.jsx";
 import {useEffect, useState} from "react";
 import Edit from "./pages/Edit.jsx";
@@ -11,16 +10,15 @@ import Format from "./pages/Format.jsx";
 import Window from "./pages/Window.jsx";
 import Help from "./pages/Help.jsx";
 import axios from "axios";
+import {useForm} from "react-hook-form";
+import Table from 'react-bootstrap/Table';
+import {Outlet} from "react-router";
 
 
 function App() {
 
-    // const [author, setAuthor] = useState(null);
-    const [searchForm, setSearchForm] = useState({
-        authorFirstName: "",
-        authorLastName: "",
-    });
-    const [navigation, setNavigation] = useState(4);
+    const { register, handleSubmit } = useForm();
+
     const [backendData, setBackendData] = useState([]);
     const [search, setSearch] = useState(null);
     const [searchString, setSearchString] = useState("http://libris.kb.se/xsearch?query=forf:(Ludwig+Wittgenstein)&format=json");
@@ -33,70 +31,72 @@ function App() {
             })
     }, [searchString])
 
-    const page = () => {switch (navigation) {
-        case 1:
-            return <File />
-        case 2:
-            return <Edit />
-        case 3:
-            return <View />
-        case 4:
-            return <Format />
-        case 5:
-            return <Window />
-        case 6:
-            return <Help />
-        default:
-            return <h1>Default</h1>
-    }};
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setSearchString(`http://libris.kb.se/xsearch?query=forf:(${searchForm.authorFirstName + "+" + searchForm.authorLastName})&format=json`)
+    const actOnSubmit = (data) => {
+        setSearchString(`http://libris.kb.se/xsearch?query=forf:(${data.authorFirstName + "+" + data.authorLastName})&format=json`)
     }
 
 
   return (
     <>
-        <Menu styling={"menu"} entries={menuItems} setNavigation={setNavigation} navigation={navigation}/>
+        <Menu styling={"menu"} entries={menuItems}/>
         <div>
-            { page() }
+            <Outlet />
             <h2>Saved search</h2>
-            <div className="tableKind">
-                { backendData !== null ?
-                    backendData.map((item) => (
-                        <div className="rowdata" key={item.identifier}>
-                            <p>{item.creator}</p>
-                            <p>{item.title}</p>
-                        </div>))
-                    :
-                    <div></div>}
-            </div>
-            <h2>Search</h2>
-            <div className="tableKind">
-                    { search !== null ?
-                        search.map((item) => (
-                        <div className="rowdata" key={item.identifier}>
-                                <p>{item.creator}</p>
-                                <p>{item.title}</p>
-                            <button onClick={() => { setBackendData([...backendData, { creator: item.creator, title: item.title, identifier: item.identifier }])}}>Add record</button>
-                        </div>))
+            <Table striped hover>
+                <thead></thead>
+                <tbody>
+                    { backendData !== null ?
+                        backendData.map((item) => (
+                            <tr key={item.identifier}>
+                                <td>{item.creator}</td>
+                                <td>{item.title}</td>
+                            </tr>
+                        ))
                         :
-                        <div></div>}
-            </div>
+                        <tr>
+                            <td>..</td>
+                            <td>..</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </Table>
+            <h2>Search</h2>
+            <Table striped hover>
+                <thead></thead>
+                <tbody>
+                { search !== null  ?
+                    search.map((item) => (
+                        <tr key={item.identifier}>
+                            <td>{item.creator}</td>
+                            <td>{item.title}</td>
+                            <td><button onClick={() => { setBackendData([...backendData, { creator: item.creator, title: item.title, identifier: item.identifier }])}}>Add record</button></td>
+                        </tr>
+                    ))
+                    :
+                    <tr>
+                        <td>..</td>
+                        <td>..</td>
+                    </tr>
+                }
+
+                </tbody>
+            </Table>
+
 
         </div>
         <button onClick={() => {
             setSearchString("http://libris.kb.se/xsearch?query=forf:(Rem+Koolhaas)&format=json")
         }}>Search for Rem Koolhaas</button>
-        <form onSubmit={handleSubmit}>
-            <label name="author-firstname">Author: </label>
-            <input type="text" id="author-firstname" name="author-firstname"
-                   onChange={(e) => {setSearchForm({...searchForm, authorFirstName: e.target.value})}}
-                  // onChange={(e) => {setSearchForm(e.target.value)}}
-                   value={searchForm.authorFirstName}/>
+        <form onSubmit={handleSubmit(actOnSubmit)}>
+            <label >Author first name: </label>
+            <input {...register("authorFirstName")} />
+            <label >Author last name: </label>
+            <input {...register("authorLastName")} />
             <input type="submit" value="Submit" />
         </form>
+
         <Table details={"five"}>
             <h1>Table</h1>
             <Parrot />

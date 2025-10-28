@@ -1,17 +1,17 @@
 import React from 'react';
+import {NavLink} from "react-router";
 
-const Menu = ({styling, entries, setNavigation, navigation}) => {
+const Menu = ({styling, entries}) => {
 
     return (
         <ul className={styling}>
             {entries.map((entry) =>
                 <li key={entry.index}>
-                    <button
-                        onClick={() => setNavigation(entry.index)}
-                        className={navigation === entry.index ? "clicked" : ""}
+                    <NavLink
+                        to={`/${entry.content}`}
                     >
                         {entry.content}
-                    </button>
+                    </NavLink>
                 </li>)}
         </ul>
     );

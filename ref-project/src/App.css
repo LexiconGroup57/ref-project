@@ -27,3 +27,7 @@
 .rowdata p {
     padding-right: 100px;
 }
+
+a.active {
+    color: darkblue;
+}
