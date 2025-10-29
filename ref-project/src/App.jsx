@@ -11,8 +11,9 @@ import Window from "./pages/Window.jsx";
 import Help from "./pages/Help.jsx";
 import axios from "axios";
 import {useForm} from "react-hook-form";
-import Table from 'react-bootstrap/Table';
 import {Outlet} from "react-router";
+import CustomTable from "./components/CustomTable.jsx";
+import Button from "react-bootstrap/Button";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             })
     }, [searchString])
 
+    const buttonList = [() => { setBackendData([...backendData, { creator: item.creator, title: item.title, identifier: item.identifier }])}]
 
     const actOnSubmit = (data) => {
         setSearchString(`http://libris.kb.se/xsearch?query=forf:(${data.authorFirstName + "+" + data.authorLastName})&format=json`)
@@ -38,51 +40,14 @@ function App() {
 
 
   return (
-    <>
+    <div id="main-container">
         <Menu styling={"menu"} entries={menuItems}/>
         <div>
             <Outlet />
             <h2>Saved search</h2>
-            <Table striped hover>
-                <thead></thead>
-                <tbody>
-                    { backendData !== null ?
-                        backendData.map((item) => (
-                            <tr key={item.identifier}>
-                                <td>{item.creator}</td>
-                                <td>{item.title}</td>
-                            </tr>
-                        ))
-                        :
-                        <tr>
-                            <td>..</td>
-                            <td>..</td>
-                        </tr>
-                    }
-
-                </tbody>
-            </Table>
+            <CustomTable records={backendData} setBackendData={setBackendData} backendData={backendData} buttonList={buttonList}/>
             <h2>Search</h2>
-            <Table striped hover>
-                <thead></thead>
-                <tbody>
-                { search !== null  ?
-                    search.map((item) => (
-                        <tr key={item.identifier}>
-                            <td>{item.creator}</td>
-                            <td>{item.title}</td>
-                            <td><button onClick={() => { setBackendData([...backendData, { creator: item.creator, title: item.title, identifier: item.identifier }])}}>Add record</button></td>
-                        </tr>
-                    ))
-                    :
-                    <tr>
-                        <td>..</td>
-                        <td>..</td>
-                    </tr>
-                }
-
-                </tbody>
-            </Table>
+            <CustomTable records={search} setBackendData={setBackendData} backendData={backendData} buttonList={buttonList}/>
 
 
         </div>
@@ -97,13 +62,7 @@ function App() {
             <input type="submit" value="Submit" />
         </form>
 
-        <Table details={"five"}>
-            <h1>Table</h1>
-            <Parrot />
-            <p>Yet more text { 45 + 23 }</p>
-        </Table>
-
-    </>
+    </div>
   )
 }
 
