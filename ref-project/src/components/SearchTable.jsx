@@ -2,20 +2,29 @@ import React from 'react';
 import {Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 
-const CustomTable = ({records, setBackendData, backendData, buttonList={buttonList}}) => {
-    console.log("CustomTable" + records);
+const SearchTable = ({search, setBackendData, backendData }) => {
     return (
         <Table striped hover>
-            <thead></thead>
+            <thead>
+            <tr>
+                <th>Creator</th>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Publisher</th>
+                <th>Action</th>
+            </tr>
+            </thead>
             <tbody>
 
-            { records ?
-                records.map((item) => (
+            { search ?
+                search.map((item) => (
                     <tr key={item.identifier}>
                         <td>{item.creator}</td>
                         <td>{item.title}</td>
+                        <td>{item.date}</td>
+                        <td>{item.publisher}</td>
                         <td>
-                            <Button size="sm" onClick={buttonList[0]}>
+                            <Button variant="outline-primary" size="sm" onClick={() => setBackendData([...backendData, item])}>
                                 Add record
                             </Button></td>
                     </tr>
@@ -32,4 +41,4 @@ const CustomTable = ({records, setBackendData, backendData, buttonList={buttonLi
     );
 };
 
-export default CustomTable;
+export default SearchTable;

@@ -1,19 +1,24 @@
 import React from 'react';
 import {NavLink} from "react-router";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import NavBar from "react-bootstrap/NavBar";
 
-const Menu = ({styling, entries}) => {
+const Menu = ({entries}) => {
 
     return (
-        <ul className={styling}>
-            {entries.map((entry) =>
-                <li key={entry.index}>
-                    <NavLink
-                        to={`/${entry.content}`}
-                    >
-                        {entry.content}
-                    </NavLink>
-                </li>)}
-        </ul>
+        <NavBar bg="secondary" expand="lg" >
+            <Container>
+                <Nav>
+                        {entries.map((entry) =>
+                                <Nav.Link as={NavLink} to={`/${entry.content}`} key={entry.index}>
+                                    {entry.content}
+                                </Nav.Link>
+                            )}
+                </Nav>
+
+            </Container>
+        </NavBar>
     );
 };
 

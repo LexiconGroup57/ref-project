@@ -12,8 +12,12 @@ import Help from "./pages/Help.jsx";
 import axios from "axios";
 import {useForm} from "react-hook-form";
 import {Outlet} from "react-router";
-import CustomTable from "./components/CustomTable.jsx";
+import RecordsTable from "./components/RecordsTable.jsx";
 import Button from "react-bootstrap/Button";
+import SearchTable from "./components/SearchTable.jsx";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 
 function App() {
@@ -32,37 +36,44 @@ function App() {
             })
     }, [searchString])
 
-    const buttonList = [() => { setBackendData([...backendData, { creator: item.creator, title: item.title, identifier: item.identifier }])}]
+    // const buttonList = [() => { setBackendData([...backendData, { creator: item.creator, title: item.title, identifier: item.identifier }])}]
 
     const actOnSubmit = (data) => {
+        console.log("search");
         setSearchString(`http://libris.kb.se/xsearch?query=forf:(${data.authorFirstName + "+" + data.authorLastName})&format=json`)
     }
 
 
   return (
-    <div id="main-container">
-        <Menu styling={"menu"} entries={menuItems}/>
+    <Container>
+        <Menu entries={menuItems}/>
         <div>
             <Outlet />
             <h2>Saved search</h2>
-            <CustomTable records={backendData} setBackendData={setBackendData} backendData={backendData} buttonList={buttonList}/>
+            <RecordsTable setBackendData={setBackendData} backendData={backendData} />
             <h2>Search</h2>
-            <CustomTable records={search} setBackendData={setBackendData} backendData={backendData} buttonList={buttonList}/>
-
-
+            <SearchTable search={search} setBackendData={setBackendData} backendData={backendData} />
         </div>
-        <button onClick={() => {
-            setSearchString("http://libris.kb.se/xsearch?query=forf:(Rem+Koolhaas)&format=json")
-        }}>Search for Rem Koolhaas</button>
+
+
+
         <form onSubmit={handleSubmit(actOnSubmit)}>
+            <Row>
+                <Col>
             <label >Author first name: </label>
             <input {...register("authorFirstName")} />
+                </Col>
+                <Col>
             <label >Author last name: </label>
             <input {...register("authorLastName")} />
-            <input type="submit" value="Submit" />
+                </Col>
+                <Col>
+                    <Button type="Submit" variant="primary">Search</Button>
+                </Col>
+            </Row>
         </form>
 
-    </div>
+    </Container>
   )
 }
 
