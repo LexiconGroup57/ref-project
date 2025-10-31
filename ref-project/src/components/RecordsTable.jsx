@@ -1,6 +1,7 @@
 import React from 'react';
 import {Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import { MdEdit } from "react-icons/md";
 
 const RecordsTable = ({setBackendData, backendData}) => {
     return (
@@ -25,7 +26,7 @@ const RecordsTable = ({setBackendData, backendData}) => {
                         <td>{item.publisher}</td>
                         <td>
                             <Button size="sm" variant="outline-primary" >
-                                Edit
+                                <MdEdit />
                             </Button></td>
                     </tr>
                 ))

@@ -1,44 +1,72 @@
 import React from 'react';
 import {Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import {flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table";
+import {libraryData} from "../data/libraryData.js";
 
 const SearchTable = ({search, setBackendData, backendData }) => {
+
+    const columns = [
+        {
+            accessorKey: 'creator',
+            header: 'Creator',
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: 'title',
+            header: 'Title',
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: 'publisher',
+            header: 'Publisher',
+            cell: (props) => <p>{props.getValue()}</p>
+        },
+        {
+            accessorKey: 'date',
+            header: 'Date',
+            cell: (props) => <p>{props.getValue()}</p>
+        }
+    ]
+
+    const table =  useReactTable({
+        data: search,
+        columns,
+        getCoreRowModel: getCoreRowModel()
+    });
+
     return (
         <Table striped hover>
             <thead>
-            <tr>
-                <th>Creator</th>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Publisher</th>
-                <th>Action</th>
-            </tr>
+            {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                    <th key={header.id}>
+                        {header.column.columnDef.header}
+                    </th>
+                        ))}
+                </tr>
+            ))}
             </thead>
             <tbody>
-
-            { search ?
-                search.map((item) => (
-                    <tr key={item.identifier}>
-                        <td>{item.creator}</td>
-                        <td>{item.title}</td>
-                        <td>{item.date}</td>
-                        <td>{item.publisher}</td>
-                        <td>
-                            <Button variant="outline-primary" size="sm" onClick={() => setBackendData([...backendData, item])}>
-                                Add record
-                            </Button></td>
-                    </tr>
-                ))
-                :
-                <tr>
-                    <td>..</td>
-                    <td>..</td>
+            {table.getRowModel().rows.map((row) => (
+                <tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                        <td key={cell.id}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                    ))}
                 </tr>
-            }
+            ))}
 
             </tbody>
         </Table>
     );
 };
+
+
+/*<Button variant="outline-primary" size="sm" onClick={() => setBackendData([...backendData, item])}>
+    Add record
+</Button></td>*/
 
 export default SearchTable;

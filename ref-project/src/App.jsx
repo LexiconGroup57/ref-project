@@ -18,14 +18,15 @@ import SearchTable from "./components/SearchTable.jsx";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import {libraryData} from "./data/libraryData.js";
 
 
 function App() {
 
     const { register, handleSubmit } = useForm();
 
-    const [backendData, setBackendData] = useState([]);
-    const [search, setSearch] = useState(null);
+    const [backendData, setBackendData] = useState(libraryData.xsearch.list);
+    const [search, setSearch] = useState([]);
     const [searchString, setSearchString] = useState("http://libris.kb.se/xsearch?query=forf:(Ludwig+Wittgenstein)&format=json");
 
     useEffect(() => {
