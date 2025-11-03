@@ -9,6 +9,7 @@ import File from "./pages/File.jsx";
 import Format from "./pages/Format.jsx";
 import View from "./pages/View.jsx";
 import Window from "./pages/Window.jsx";
+import {ThemeContext} from "./contexts/contexts.js";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+      <ThemeContext value="dark">
+        <RouterProvider router={router} />
+      </ThemeContext>
   </StrictMode>,
 )

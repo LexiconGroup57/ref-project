@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { MdEdit } from "react-icons/md";
+import {RefContext, ThemeContext} from "../contexts/contexts.js";
 
 const RecordsTable = ({setBackendData, backendData}) => {
+
+    let loggedIn = useContext(RefContext);
+    let theme = useContext(ThemeContext);
+    let buttonTheme = `outline-primary ${theme === "light" ? "bg-light text-dark" : "bg-dark text-light"}`;
+
     return (
         <Table striped hover>
             <thead>
@@ -25,8 +31,8 @@ const RecordsTable = ({setBackendData, backendData}) => {
                         <td>{item.date}</td>
                         <td>{item.publisher}</td>
                         <td>
-                            <Button size="sm" variant="outline-primary" >
-                                <MdEdit />
+                            <Button size="sm" className={buttonTheme} >
+                                <p>{loggedIn + " " + theme}</p><MdEdit />
                             </Button></td>
                     </tr>
                 ))

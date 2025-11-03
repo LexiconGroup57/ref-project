@@ -19,10 +19,19 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {libraryData} from "./data/libraryData.js";
+import {RefContext, ThemeContext} from "./contexts/contexts.js";
+
 
 
 function App() {
 
+    const [theme, setTheme] = useState("light");
+    const [alternativeTheme, setAlternativeTheme] = useState({
+        kind: [
+            "light", "dark", "fuzzy"
+        ],
+        attitude: "harsh"
+    });
     const { register, handleSubmit } = useForm();
 
     const [backendData, setBackendData] = useState(libraryData.xsearch.list);
@@ -46,35 +55,36 @@ function App() {
 
 
   return (
-    <Container>
-        <Menu entries={menuItems}/>
-        <div>
-            <Outlet />
-            <h2>Saved search</h2>
-            <RecordsTable setBackendData={setBackendData} backendData={backendData} />
-            <h2>Search</h2>
-            <SearchTable search={search} setBackendData={setBackendData} backendData={backendData} />
-        </div>
-
-
-
-        <form onSubmit={handleSubmit(actOnSubmit)}>
-            <Row>
-                <Col>
-            <label >Author first name: </label>
-            <input {...register("authorFirstName")} />
-                </Col>
-                <Col>
-            <label >Author last name: </label>
-            <input {...register("authorLastName")} />
-                </Col>
-                <Col>
-                    <Button type="Submit" variant="primary">Search</Button>
-                </Col>
-            </Row>
-        </form>
-
-    </Container>
+      <RefContext value="Tobias">
+          <ThemeContext value={theme}>
+            <Container>
+                <Menu entries={menuItems}/>
+                <div>
+                    <Outlet />
+                    <h2>Saved search</h2>
+                    <RecordsTable setBackendData={setBackendData} backendData={backendData} />
+                    <h2>Search</h2>
+                    <SearchTable search={search} setBackendData={setBackendData} backendData={backendData} />
+                </div>
+                <form onSubmit={handleSubmit(actOnSubmit)}>
+                    <Row>
+                        <Col>
+                    <label >Author first name: </label>
+                    <input {...register("authorFirstName")} />
+                        </Col>
+                        <Col>
+                    <label >Author last name: </label>
+                    <input {...register("authorLastName")} />
+                        </Col>
+                        <Col>
+                            <Button type="Submit" variant="primary">Search</Button>
+                        </Col>
+                    </Row>
+                </form>
+                <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>Toggle theme</button>
+            </Container>
+          </ThemeContext>
+      </RefContext>
   )
 }
 
