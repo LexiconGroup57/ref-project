@@ -10,6 +10,7 @@ import Format from "./pages/Format.jsx";
 import View from "./pages/View.jsx";
 import Window from "./pages/Window.jsx";
 import {ThemeContext} from "./contexts/contexts.js";
+import Dndkit from "./components/Dndkit.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,12 @@ const router = createBrowserRouter([
               Component: Window
           }
       ]
+
   },
+    {
+        path: "/draganddrop",
+        Component: Dndkit,
+    }
 
 ]);
 
