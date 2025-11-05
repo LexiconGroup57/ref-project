@@ -5,9 +5,16 @@ import Droppable from "./Droppable.jsx";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import {referenceAtom} from "../state-management/atoms.js";
+import {useAtom} from "jotai";
+import {useReference} from "../state-management/referenceStore.js";
 
 const Dndkit = () => {
     const [isDropped, setIsDropped] = useState(false);
+    const [reference2, setReference2] = useAtom(referenceAtom);
+    const reference = useReference((state) => state.reference);
+    const resetReference = useReference((state) => state.resetReference);
+    const addToReference = useReference((state) => state.addToReference);
 
     return (
         <DndContext onDragEnd={(event) => {
@@ -16,6 +23,8 @@ const Dndkit = () => {
         }}}>
             <div className="dndkit">
             <h1>dnd kit</h1>
+                <div>{reference.length > 0 && reference.map(ref => <p>{ref.word}</p>)}</div>
+                <button onClick={() => addToReference({word: "Truth"})}>Add truth</button>
             <Draggable>
                 {isDropped ? undefined : <p>This is the dragged part</p>}
             </Draggable>
