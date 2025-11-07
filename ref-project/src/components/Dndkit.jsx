@@ -5,16 +5,16 @@ import Droppable from "./Droppable.jsx";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import {referenceAtom} from "../state-management/atoms.js";
-import {useAtom} from "jotai";
+//import {referenceAtom} from "../state-management/atoms.js";
+// import {useAtom} from "jotai";
 import {useReference} from "../state-management/referenceStore.js";
 import {useAddReference, useGetAllReferences} from "../state-management/referenceQueries.js";
 
 const Dndkit = () => {
     const [isDropped, setIsDropped] = useState(false);
-    const [reference2, setReference2] = useAtom(referenceAtom);
+    // const [reference2, setReference2] = useAtom(referenceAtom);
     const reference = useReference((state) => state.reference);
-    const resetReference = useReference((state) => state.resetReference);
+    // const resetReference = useReference((state) => state.resetReference);
     const addToReference = useReference((state) => state.addToReference);
     const addReference = useAddReference();
     const item = {word: "Truth"};
