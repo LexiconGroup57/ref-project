@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import { MdEdit } from "react-icons/md";
 import {RefContext, ThemeContext} from "../contexts/contexts.js";
 
-const RecordsTable = ({setBackendData, backendData}) => {
+const RecordsTable = ({postRecord, backendData}) => {
 
     let loggedIn = useContext(RefContext);
     let theme = useContext(ThemeContext);
@@ -31,7 +31,7 @@ const RecordsTable = ({setBackendData, backendData}) => {
                         <td>{item.date}</td>
                         <td>{item.publisher}</td>
                         <td>
-                            <Button size="sm" className={buttonTheme} >
+                            <Button size="sm" onClick={() => postRecord(item)} className={buttonTheme} >
                                 <p>{loggedIn + " " + theme}</p><MdEdit />
                             </Button></td>
                     </tr>

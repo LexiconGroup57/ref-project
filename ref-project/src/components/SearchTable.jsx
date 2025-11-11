@@ -3,8 +3,9 @@ import {Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table";
 import {libraryData} from "../data/libraryData.js";
+import {MdEdit} from "react-icons/md";
 
-const SearchTable = ({search, setBackendData, backendData }) => {
+const SearchTable = ({search, postRecord }) => {
 
     const columns = [
         {
@@ -56,6 +57,9 @@ const SearchTable = ({search, setBackendData, backendData }) => {
                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </td>
                     ))}
+                    <td><Button size="sm" onClick={() => postRecord(row.original)}  >
+                        <p>Post record</p><MdEdit />
+                    </Button></td>
                 </tr>
             ))}
 

@@ -34,6 +34,7 @@ function App() {
     });
     const { register, handleSubmit } = useForm();
 
+    const [altBackendData, setAltBackendData] = useState([])
     const [backendData, setBackendData] = useState(libraryData.xsearch.list);
     const [search, setSearch] = useState([]);
     const [searchString, setSearchString] = useState("http://libris.kb.se/xsearch?query=forf:(Ludwig+Wittgenstein)&format=json");
@@ -46,6 +47,12 @@ function App() {
             })
     }, [searchString])
 
+    useEffect(() => {
+        axios.get('http://localhost:5287/api/references')
+        .then(response => {
+            setAltBackendData(response.data);
+        })
+    })
     // const buttonList = [() => { setBackendData([...backendData, { creator: item.creator, title: item.title, identifier: item.identifier }])}]
 
     const actOnSubmit = (data) => {
@@ -53,6 +60,18 @@ function App() {
         setSearchString(`http://libris.kb.se/xsearch?query=forf:(${data.authorFirstName + "+" + data.authorLastName})&format=json`)
     }
 
+    const postRecord = (item) => {
+        console.log(item);
+        axios.post("http://localhost:5287/api/references",
+            {
+                creator: item.creator,
+                title: item.title,
+                publisher: item.publisher,
+                date: item.date,
+                id: item.id,
+            })
+
+    }
 
   return (
       <RefContext value="Tobias">
@@ -62,9 +81,9 @@ function App() {
                 <div>
                     <Outlet />
                     <h2>Saved search</h2>
-                    <RecordsTable setBackendData={setBackendData} backendData={backendData} />
+                    <RecordsTable postRecord={postRecord} backendData={altBackendData} />
                     <h2>Search</h2>
-                    <SearchTable search={search} setBackendData={setBackendData} backendData={backendData} />
+                    <SearchTable search={search} postRecord={postRecord} />
                 </div>
                 <form onSubmit={handleSubmit(actOnSubmit)}>
                     <Row>
