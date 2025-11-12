@@ -3,7 +3,7 @@ import {Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table";
 import {libraryData} from "../data/libraryData.js";
-import {MdEdit} from "react-icons/md";
+import {MdOutlineSaveAlt} from "react-icons/md";
 
 const SearchTable = ({search, postRecord }) => {
 
@@ -51,14 +51,14 @@ const SearchTable = ({search, postRecord }) => {
             </thead>
             <tbody>
             {table.getRowModel().rows.map((row) => (
-                <tr key={row.id}>
+                <tr key={row.id} className="text-truncate">
                     {row.getVisibleCells().map((cell) => (
                         <td key={cell.id}>
                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </td>
                     ))}
-                    <td><Button size="sm" onClick={() => postRecord(row.original)}  >
-                        <p>Post record</p><MdEdit />
+                    <td><Button variant="outline-primary" size="sm" onClick={() => postRecord(row.original)}  >
+                        <MdOutlineSaveAlt />
                     </Button></td>
                 </tr>
             ))}

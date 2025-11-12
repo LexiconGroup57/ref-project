@@ -25,14 +25,14 @@ const RecordsTable = ({postRecord, backendData}) => {
 
             { backendData ?
                 backendData.map((item) => (
-                    <tr key={item.identifier}>
+                    <tr className="text-truncate" key={item.identifier}>
                         <td>{item.creator}</td>
                         <td>{item.title}</td>
                         <td>{item.date}</td>
                         <td>{item.publisher}</td>
                         <td>
-                            <Button size="sm" onClick={() => postRecord(item)} className={buttonTheme} >
-                                <p>{loggedIn + " " + theme}</p><MdEdit />
+                            <Button size="sm"  className={buttonTheme} >
+                                <MdEdit />
                             </Button></td>
                     </tr>
                 ))

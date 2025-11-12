@@ -1,24 +1,9 @@
 import './App.css'
 import Menu from "./components/Menu.jsx";
 import {menuItems} from "./siteconfigurations/navigation.js";
-import Parrot from "./components/Parrot.jsx";
-import {useEffect, useState} from "react";
-import Edit from "./pages/Edit.jsx";
-import File from "./pages/File.jsx";
-import View from "./pages/View.jsx";
-import Format from "./pages/Format.jsx";
-import Window from "./pages/Window.jsx";
-import Help from "./pages/Help.jsx";
-import axios from "axios";
-import {useForm} from "react-hook-form";
+import {useState} from "react";
 import {Outlet} from "react-router";
-import RecordsTable from "./components/RecordsTable.jsx";
-import Button from "react-bootstrap/Button";
-import SearchTable from "./components/SearchTable.jsx";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import {libraryData} from "./data/libraryData.js";
 import {RefContext, ThemeContext} from "./contexts/contexts.js";
 
 
@@ -26,52 +11,7 @@ import {RefContext, ThemeContext} from "./contexts/contexts.js";
 function App() {
 
     const [theme, setTheme] = useState("light");
-    const [alternativeTheme, setAlternativeTheme] = useState({
-        kind: [
-            "light", "dark", "fuzzy"
-        ],
-        attitude: "harsh"
-    });
-    const { register, handleSubmit } = useForm();
 
-    const [altBackendData, setAltBackendData] = useState([])
-    const [backendData, setBackendData] = useState(libraryData.xsearch.list);
-    const [search, setSearch] = useState([]);
-    const [searchString, setSearchString] = useState("http://libris.kb.se/xsearch?query=forf:(Ludwig+Wittgenstein)&format=json");
-
-    useEffect(() => {
-        console.log("useEffect");
-        axios.get(searchString)
-            .then(response => {
-                setSearch(response.data.xsearch.list);
-            })
-    }, [searchString])
-
-    useEffect(() => {
-        axios.get('http://localhost:5287/api/references')
-        .then(response => {
-            setAltBackendData(response.data);
-        })
-    })
-    // const buttonList = [() => { setBackendData([...backendData, { creator: item.creator, title: item.title, identifier: item.identifier }])}]
-
-    const actOnSubmit = (data) => {
-        console.log("search");
-        setSearchString(`http://libris.kb.se/xsearch?query=forf:(${data.authorFirstName + "+" + data.authorLastName})&format=json`)
-    }
-
-    const postRecord = (item) => {
-        console.log(item);
-        axios.post("http://localhost:5287/api/references",
-            {
-                creator: item.creator,
-                title: item.title,
-                publisher: item.publisher,
-                date: item.date,
-                id: item.id,
-            })
-
-    }
 
   return (
       <RefContext value="Tobias">
@@ -80,27 +20,11 @@ function App() {
                 <Menu entries={menuItems}/>
                 <div>
                     <Outlet />
-                    <h2>Saved search</h2>
-                    <RecordsTable postRecord={postRecord} backendData={altBackendData} />
-                    <h2>Search</h2>
-                    <SearchTable search={search} postRecord={postRecord} />
+
+
                 </div>
-                <form onSubmit={handleSubmit(actOnSubmit)}>
-                    <Row>
-                        <Col>
-                    <label >Author first name: </label>
-                    <input {...register("authorFirstName")} />
-                        </Col>
-                        <Col>
-                    <label >Author last name: </label>
-                    <input {...register("authorLastName")} />
-                        </Col>
-                        <Col>
-                            <Button type="Submit" variant="primary">Search</Button>
-                        </Col>
-                    </Row>
-                </form>
-                <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>Toggle theme</button>
+
+
             </Container>
           </ThemeContext>
       </RefContext>

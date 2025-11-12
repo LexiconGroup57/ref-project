@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Format = () => {
+const Home = () => {
     return (
         <div>
-            <h1>Format</h1>
+            <h1>Home</h1>
         </div>
     );
 };
 
-export default Format;
+export default Home;
