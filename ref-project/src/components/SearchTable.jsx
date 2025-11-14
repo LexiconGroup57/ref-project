@@ -2,7 +2,6 @@ import React from 'react';
 import {Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table";
-import {libraryData} from "../data/libraryData.js";
 import {MdOutlineSaveAlt} from "react-icons/md";
 
 const SearchTable = ({search, postRecord }) => {

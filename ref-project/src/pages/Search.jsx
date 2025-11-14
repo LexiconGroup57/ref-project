@@ -14,7 +14,7 @@ const Search = () => {
     const { register, handleSubmit } = useForm();
 
     useEffect(() => {
-        console.log("useEffect");
+        console.log(searchString);
         axios.get(searchString)
             .then(response => {
                 setSearch(response.data.xsearch.list);
@@ -33,14 +33,20 @@ const Search = () => {
     }
 
     const actOnSubmit = (data) => {
-        console.log("search");
-        setSearchString(`http://libris.kb.se/xsearch?query=forf:(${data.authorFirstName + "+" + data.authorLastName})&format=json`)
+        let hasForf = data.authorFirstName || data.authorLastName;
+        let hasTitle = data.title.length > 0;
+        let hasForl = data.publisher.length > 0;
+        setSearchString(`http://libris.kb.se/xsearch?query=
+        ${hasForf ? `forf:(${data.authorFirstName + "+" + data.authorLastName})`: ""}
+        ${hasTitle ? `tit:(${data.title})` : ""}
+        ${hasForl ? `forl:(${data.publisher})` : ""}
+        &format=json`);
     }
 
     return (
         <div>
             <form onSubmit={handleSubmit(actOnSubmit)}>
-                <Row>
+                <Row className="mt-2">
                     <Col>
                         <label >Author first name: </label>
                         <input {...register("authorFirstName")} />
@@ -48,6 +54,16 @@ const Search = () => {
                     <Col>
                         <label >Author last name: </label>
                         <input {...register("authorLastName")} />
+                    </Col>
+                </Row>
+                <Row className="mt-2">
+                    <Col>
+                        <label>Title: </label>
+                        <input {...register("title")} />
+                    </Col>
+                    <Col>
+                        <label >Publisher: </label>
+                        <input {...register("publisher")} />
                     </Col>
                     <Col>
                         <Button type="Submit" variant="primary">Search</Button>
