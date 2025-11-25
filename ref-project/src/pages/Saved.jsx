@@ -7,7 +7,7 @@ const Saved = () => {
     const [altBackendData, setAltBackendData] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:5287/api/references')
+        axios.get('/api/references')
             .then(response => {
                 setAltBackendData(response.data);
             })

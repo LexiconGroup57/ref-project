@@ -20,7 +20,7 @@ function App() {
     }
 
     const logIn = () => {
-        axios.post('http://localhost:5287/user/login?useCookies=true', {
+        axios.post('/user/login?useCookies=true', {
             "email": "tobias@lexicon.se",
             "password": "Group57%"
         })
@@ -33,10 +33,7 @@ function App() {
     }
 
     const logOut = () => {
-        axios.post('http://localhost:5287/user/logout', {
-            withCredentials: true,
-            body: {}
-        })
+        axios.post('/user/logout', {})
             .then(response => {
                 console.log(response);
                 if(response.status === 200) {
