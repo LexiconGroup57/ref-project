@@ -2,9 +2,11 @@ import React, {useContext} from 'react';
 import {Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { MdEdit } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
+import { HiMiniDocumentDuplicate } from "react-icons/hi2";
 import {RefContext, ThemeContext} from "../contexts/contexts.js";
 
-const RecordsTable = ({postRecord, backendData}) => {
+const RecordsTable = ({backendData, handleEdit, handleDelete, handleDuplicate}) => {
 
     let loggedIn = useContext(RefContext);
     let theme = useContext(ThemeContext);
@@ -25,15 +27,22 @@ const RecordsTable = ({postRecord, backendData}) => {
 
             { backendData ?
                 backendData.map((item) => (
-                    <tr className="text-truncate" key={item.identifier}>
+                    <tr className="text-truncate" key={item.id}>
                         <td>{item.creator}</td>
                         <td>{item.title}</td>
                         <td>{item.date}</td>
                         <td>{item.publisher}</td>
                         <td>
-                            <Button size="sm"  className={buttonTheme} >
+                            <Button size="sm" onClick={()=> {handleEdit(item)}} className={buttonTheme} >
                                 <MdEdit />
-                            </Button></td>
+                            </Button>
+                            <Button size="sm" onClick={()=> {handleDuplicate(item)}} className={buttonTheme} >
+                                <HiMiniDocumentDuplicate />
+                            </Button>
+                            <Button size="sm"  onClick={()=> {handleDelete(item)}} className={buttonTheme} >
+                                <MdDeleteForever />
+                            </Button>
+                        </td>
                     </tr>
                 ))
                 :

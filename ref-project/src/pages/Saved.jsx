@@ -4,19 +4,25 @@ import axios from "axios";
 
 const Saved = () => {
 
-    const [altBackendData, setAltBackendData] = useState([])
+    const [backendData, setBackendData] = useState([])
 
     useEffect(() => {
         axios.get('/api/references')
             .then(response => {
-                setAltBackendData(response.data);
+                setBackendData(response.data);
             })
     })
+
+    const handleDelete = (item) => {}
+
+    const handleDuplicate = (item) => {}
+
+    const handleEdit = (item) => {}
 
     return (
         <div>
             <h2>Saved search</h2>
-            <RecordsTable backendData={altBackendData} />
+            <RecordsTable backendData={backendData} handleEdit={handleEdit} handleDelete={handleDelete} handleDuplicate={handleDuplicate}/>
         </div>
     );
 };
