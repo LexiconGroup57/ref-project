@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import SearchTable from "../components/SearchTable.jsx";
 import axios from "axios";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
 import {useForm} from "react-hook-form";
+import RefHeadline from "../components/RefHeadline.jsx";
 
 const Search = () => {
 
@@ -45,33 +43,35 @@ const Search = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit(actOnSubmit)}>
-                <Row className="mt-2">
-                    <Col>
-                        <label >Author first name: </label>
-                        <input {...register("authorFirstName")} />
-                    </Col>
-                    <Col>
+            <div className="container mx-auto w-1/2">
+            <form onSubmit={handleSubmit(actOnSubmit)} className="flex justify-between">
+                <div className="">
+                    <div className="pb-4">
+                        <label>Author first name: </label>
+                        <input {...register("authorFirstName")} className="ml-3 border-1 border-slate-400"/>
+                    </div>
+                    <div>
                         <label >Author last name: </label>
-                        <input {...register("authorLastName")} />
-                    </Col>
-                </Row>
-                <Row className="mt-2">
-                    <Col>
+                        <input {...register("authorLastName")} className="ml-3 border-1 border-slate-400"/>
+                    </div>
+                </div>
+                <div>
+                    <div className="pb-4">
                         <label>Title: </label>
-                        <input {...register("title")} />
-                    </Col>
-                    <Col>
+                        <input {...register("title")} className="ml-3 border-1 border-slate-400"/>
+                    </div>
+                    <div>
                         <label >Publisher: </label>
-                        <input {...register("publisher")} />
-                    </Col>
-                    <Col>
-                        <Button type="Submit" variant="primary">Search</Button>
-                    </Col>
-                </Row>
-            </form>
+                        <input {...register("publisher")} className="ml-3 border-1 border-slate-400"/>
+                    </div>
 
-            <h2>Search</h2>
+                </div>
+                <div>
+                    <button className="bg-slate-300 text-slate-950 py-1 px-4 hover:bg-slate-500 hover:text-white" type="Submit" >Search</button>
+                </div>
+            </form>
+            </div>
+            <RefHeadline>Search results</RefHeadline>
             <SearchTable search={search} postRecord={postRecord} />
         </div>
     );

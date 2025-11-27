@@ -1,8 +1,5 @@
 import React, {useContext} from 'react';
 import {NavLink} from "react-router";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import NavBar from "react-bootstrap/NavBar";
 import {RefContext, ThemeContext} from "../contexts/contexts.js";
 
 
@@ -12,20 +9,19 @@ const Menu = ({entries}) => {
     const { loggedIn, handleLogIn } = useContext(RefContext);
 
     return (
-        <NavBar bg="secondary" expand="lg"  >
-            <Container>
-                <Nav>
+            <div className="flex justify-between py-2 mb-7 border-b-1">
+                <nav className="flex justify-between w-60">
                         {entries.map((entry) =>
-                                <Nav.Link className="text-white" as={NavLink} to={`/${entry.content}`} key={entry.index}>
+                                <NavLink className="" to={`/${entry.content}`} key={entry.index}>
                                     {entry.content}
-                                </Nav.Link>
+                                </NavLink>
                             )}
+                </nav>
+                <div className="flex justify-between w-45">
                     <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>Toggle theme</button>
                     <button onClick={handleLogIn}>{loggedIn ? "Log out" : "Log in" }</button>
-                </Nav>
-
-            </Container>
-        </NavBar>
+                </div>
+            </div>
     );
 };
 

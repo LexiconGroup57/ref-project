@@ -1,10 +1,8 @@
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Menu from "./components/Menu.jsx";
 import {menuItems} from "./siteconfigurations/navigation.js";
 import {useState} from "react";
 import {Outlet} from "react-router";
-import Container from "react-bootstrap/Container";
 import {RefContext, ThemeContext} from "./contexts/contexts.js";
 import axios from "axios";
 
@@ -46,7 +44,7 @@ function App() {
   return (
       <RefContext value={{loggedIn, handleLogIn}}>
           <ThemeContext value={{theme, setTheme}}>
-            <Container>
+            <div className="container mx-auto font-[Open_Sans]">
                 <Menu entries={menuItems}/>
                 <div>
                     <Outlet />
@@ -55,7 +53,7 @@ function App() {
                 </div>
 
 
-            </Container>
+            </div>
           </ThemeContext>
       </RefContext>
   )

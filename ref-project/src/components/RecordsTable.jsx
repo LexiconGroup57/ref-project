@@ -1,6 +1,4 @@
 import React, {useContext} from 'react';
-import {Table} from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import { MdEdit } from "react-icons/md";
 import { MdDeleteForever } from "react-icons/md";
 import { HiMiniDocumentDuplicate } from "react-icons/hi2";
@@ -13,7 +11,7 @@ const RecordsTable = ({backendData, handleEdit, handleDelete, handleDuplicate}) 
     let buttonTheme = `outline-primary ${theme === "light" ? "bg-light text-dark" : "bg-dark text-light"}`;
 
     return (
-        <Table striped hover>
+        <table>
             <thead>
             <tr>
                 <th>Creator</th>
@@ -33,15 +31,15 @@ const RecordsTable = ({backendData, handleEdit, handleDelete, handleDuplicate}) 
                         <td>{item.date}</td>
                         <td>{item.publisher}</td>
                         <td>
-                            <Button size="sm" onClick={()=> {handleEdit(item)}} className={buttonTheme} >
+                            <button onClick={()=> {handleEdit(item)}} className={buttonTheme} >
                                 <MdEdit />
-                            </Button>
-                            <Button size="sm" onClick={()=> {handleDuplicate(item)}} className={buttonTheme} >
+                            </button>
+                            <button onClick={()=> {handleDuplicate(item)}} className={buttonTheme} >
                                 <HiMiniDocumentDuplicate />
-                            </Button>
-                            <Button size="sm"  onClick={()=> {handleDelete(item)}} className={buttonTheme} >
+                            </button>
+                            <button onClick={()=> {handleDelete(item)}} className={buttonTheme} >
                                 <MdDeleteForever />
-                            </Button>
+                            </button>
                         </td>
                     </tr>
                 ))
@@ -53,7 +51,7 @@ const RecordsTable = ({backendData, handleEdit, handleDelete, handleDuplicate}) 
             }
 
             </tbody>
-        </Table>
+        </table>
     );
 };
 

@@ -1,9 +1,10 @@
 import React from 'react';
+import RefHeadline from "../components/RefHeadline.jsx";
 
 const Home = () => {
     return (
         <div>
-            <h1>Home</h1>
+            <RefHeadline>Home</RefHeadline>
         </div>
     );
 };

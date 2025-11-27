@@ -1,6 +1,4 @@
 import React from 'react';
-import {Table} from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import {flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table";
 import {MdOutlineSaveAlt} from "react-icons/md";
 
@@ -36,34 +34,35 @@ const SearchTable = ({search, postRecord }) => {
     });
 
     return (
-        <Table striped hover>
-            <thead>
+        <table className="table-auto w-full">
+            <thead className="text-left">
             {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
-                    <th key={header.id}>
+                    <th className="py-2 my-2" key={header.id}>
                         {header.column.columnDef.header}
                     </th>
                         ))}
+                    <th>Action</th>
                 </tr>
             ))}
             </thead>
             <tbody>
             {table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className="text-truncate">
+                <tr key={row.id} className="">
                     {row.getVisibleCells().map((cell) => (
                         <td key={cell.id}>
                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </td>
                     ))}
-                    <td><Button variant="outline-primary" size="sm" onClick={() => postRecord(row.original)}  >
+                    <td><button onClick={() => postRecord(row.original)}  >
                         <MdOutlineSaveAlt />
-                    </Button></td>
+                    </button></td>
                 </tr>
             ))}
 
             </tbody>
-        </Table>
+        </table>
     );
 };
 
