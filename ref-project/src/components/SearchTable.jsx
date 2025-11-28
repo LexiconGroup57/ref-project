@@ -2,7 +2,7 @@ import React from 'react';
 import {flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table";
 import {MdOutlineSaveAlt} from "react-icons/md";
 
-const SearchTable = ({search, postRecord }) => {
+const SearchTable = ({data, refActions }) => {
 
     const columns = [
         {
@@ -28,13 +28,13 @@ const SearchTable = ({search, postRecord }) => {
     ]
 
     const table =  useReactTable({
-        data: search,
+        data: data,
         columns,
         getCoreRowModel: getCoreRowModel()
     });
 
     return (
-        <table className="table-auto w-full">
+        <table className="table-auto w-full text-sm leading-7">
             <thead className="text-left">
             {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -49,15 +49,15 @@ const SearchTable = ({search, postRecord }) => {
             </thead>
             <tbody>
             {table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className="">
+                <tr key={row.id} className="hover:bg-gray-100 truncate">
                     {row.getVisibleCells().map((cell) => (
                         <td key={cell.id}>
                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </td>
                     ))}
-                    <td><button onClick={() => postRecord(row.original)}  >
-                        <MdOutlineSaveAlt />
-                    </button></td>
+                    <td>
+                        {refActions.map((refAction) => refAction(row.original))}
+                    </td>
                 </tr>
             ))}
 

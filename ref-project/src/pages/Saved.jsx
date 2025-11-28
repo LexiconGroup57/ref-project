@@ -1,12 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import RecordsTable from "../components/RecordsTable.jsx";
 import axios from "axios";
 import RefHeadline from "../components/RefHeadline.jsx";
+import {ThemeContext} from "../contexts/contexts.js";
+import SearchTable from "../components/SearchTable.jsx";
+import {MdDeleteForever, MdEdit} from "react-icons/md";
+import {HiMiniDocumentDuplicate} from "react-icons/hi2";
 
 const Saved = () => {
 
     const [backendData, setBackendData] = useState([])
-
+    let theme = useContext(ThemeContext);
+    let buttonTheme = `outline-primary ${theme === "light" ? "bg-light text-dark" : "bg-dark text-light"}`;
     useEffect(() => {
         axios.get('/api/references')
             .then(response => {
@@ -14,16 +19,47 @@ const Saved = () => {
             })
     })
 
-    const handleDelete = (item) => {}
+    const handleDelete = (item) => {
+        console.log(item);
+    }
 
-    const handleDuplicate = (item) => {}
+    const handleDuplicate = (item) => {
+        console.log(item);
+    }
 
-    const handleEdit = (item) => {}
+    const handleEdit = (item) => {
+        console.log(item);
+    }
+
+    const trialFunction2 = (item) =>
+        (
+            <button onClick={()=> {handleEdit(item)}} className={buttonTheme} >
+                <MdEdit />
+            </button>
+        )
+
+    const trialFunction3 = (item) =>
+        (
+            <button onClick={()=> {handleDuplicate(item)}} className={buttonTheme} >
+                <HiMiniDocumentDuplicate />
+            </button>
+        )
+
+    const trialFunction4 = (item) =>
+        (
+            <button onClick={()=> {handleDelete(item)}} className={buttonTheme} >
+                <MdDeleteForever />
+            </button>
+        )
+
+    const refActions = [
+        trialFunction2, trialFunction3, trialFunction4
+    ]
 
     return (
         <div>
             <RefHeadline>Saved search</RefHeadline>
-            <RecordsTable backendData={backendData} handleEdit={handleEdit} handleDelete={handleDelete} handleDuplicate={handleDuplicate}/>
+            <SearchTable data={backendData} refActions={refActions}/>
         </div>
     );
 };
