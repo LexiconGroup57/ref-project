@@ -10,6 +10,7 @@ import Home from "./pages/Home.jsx";
 import Saved from "./pages/Saved.jsx";
 import Dndkit from "./components/Dndkit.jsx";
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import Login from "./pages/Login.jsx";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
           {
               path: "/saved",
               Component: Saved
+          },
+          {
+              path: "/login",
+              Component: Login
           }
       ]
 

@@ -6,7 +6,7 @@ import {RefContext, ThemeContext} from "../contexts/contexts.js";
 const Menu = ({entries}) => {
 
     const {theme, setTheme} = useContext(ThemeContext);
-    const { loggedIn, handleLogIn } = useContext(RefContext);
+    const { loggedIn, handleLogIn, user } = useContext(RefContext);
 
     return (
             <div className="flex justify-between py-2 mb-7 border-b-1">
@@ -18,8 +18,9 @@ const Menu = ({entries}) => {
                             )}
                 </nav>
                 <div className="flex justify-between w-45">
+                    <p className="">{user}</p>
                     <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>Toggle theme</button>
-                    <button onClick={handleLogIn}>{loggedIn ? "Log out" : "Log in" }</button>
+                    {loggedIn ? <button onClick={handleLogIn}>Log out</button> : <NavLink to="/login">Log in</NavLink>}
                 </div>
             </div>
     );

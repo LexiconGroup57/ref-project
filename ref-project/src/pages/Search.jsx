@@ -56,10 +56,6 @@ const Search = () => {
         trialFunction1
     ]
 
-
-
-
-
     return (
         <div>
             <div className="container mx-auto w-1/2">
