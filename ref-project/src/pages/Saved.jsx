@@ -6,9 +6,17 @@ import {ThemeContext} from "../contexts/contexts.js";
 import SearchTable from "../components/SearchTable.jsx";
 import {MdDeleteForever, MdEdit} from "react-icons/md";
 import {HiMiniDocumentDuplicate} from "react-icons/hi2";
+import EditForm from "../components/EditForm.jsx";
 
 const Saved = () => {
 
+    const [detailedPost, setDetailedPost] = useState({
+        creator: "",
+        title: "",
+        publisher: "",
+        date: "",
+        id: ""
+    });
     const [backendData, setBackendData] = useState([])
     let theme = useContext(ThemeContext);
     let buttonTheme = `outline-primary ${theme === "light" ? "bg-light text-dark" : "bg-dark text-light"}`;
@@ -20,15 +28,18 @@ const Saved = () => {
     })
 
     const handleDelete = (item) => {
-        console.log(item);
+        axios.post(`api/references/delete/${item.id}`)
+            .then(response => {console.log(response)});
     }
 
     const handleDuplicate = (item) => {
-        console.log(item);
+        axios.post(`api/references/duplicate/${item.id}`)
+            .then(response => {console.log(response)});
     }
 
     const handleEdit = (item) => {
-        console.log(item);
+        axios.post(`api/references/edit/${item.id}`, item)
+            .then(response => {console.log(response)});
     }
 
     const trialFunction2 = (item) =>
@@ -58,6 +69,7 @@ const Saved = () => {
 
     return (
         <div>
+            <EditForm actOnSubmit={handleEdit} post={detailedPost}/>
             <RefHeadline>Saved search</RefHeadline>
             <SearchTable data={backendData} refActions={refActions}/>
         </div>
