@@ -29,7 +29,6 @@ const Search = () => {
                 title: item.title,
                 publisher: item.publisher,
                 date: item.date,
-                id: item.id,
             })
 
     }

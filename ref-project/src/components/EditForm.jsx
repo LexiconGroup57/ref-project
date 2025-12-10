@@ -1,30 +1,41 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useForm} from "react-hook-form";
 
 const EditForm = ({actOnSubmit, post}) => {
 
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm(
+        {defaultValues: {
+            creator: post.creator,
+            title: post.title,
+            publisher: post.publisher,
+            date: post.date,
+            }}
+    );
+
+    useEffect(() => {
+        reset(post);
+    }, [post, reset]);
 
     return (
         <form onSubmit={handleSubmit(actOnSubmit)} className="flex justify-between">
             <div className="">
                 <div className="pb-4 flex justify-end">
                     <label>Creator: </label>
-                    <input {...register("creator")} className="p-1 text-sm ml-3 border-1 border-slate-400" value={post.creator}/>
+                    <input {...register("creator")} className="p-1 text-sm ml-3 border-1 border-slate-400" />
                 </div>
                 <div className="flex justify-end">
                     <label >Date: </label>
-                    <input {...register("date")} className="p-1 text-sm ml-3 border-1 border-slate-400" value={post.date}/>
+                    <input {...register("date")} className="p-1 text-sm ml-3 border-1 border-slate-400" />
                 </div>
             </div>
             <div>
                 <div className="pb-4 flex justify-end">
                     <label>Title: </label>
-                    <input {...register("title")} className="p-1 text-sm ml-3 border-1 border-slate-400" value={post.title}/>
+                    <input {...register("title")} className="p-1 text-sm ml-3 border-1 border-slate-400" />
                 </div>
                 <div className="flex justify-end">
                     <label >Publisher: </label>
-                    <input {...register("publisher")} className="p-1 text-sm ml-3 border-1 border-slate-400" value={post.publisher}/>
+                    <input {...register("publisher")} className="p-1 text-sm ml-3 border-1 border-slate-400" />
                 </div>
 
             </div>

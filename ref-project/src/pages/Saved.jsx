@@ -17,6 +17,7 @@ const Saved = () => {
         date: "",
         id: ""
     });
+
     const [backendData, setBackendData] = useState([])
     let theme = useContext(ThemeContext);
     let buttonTheme = `outline-primary ${theme === "light" ? "bg-light text-dark" : "bg-dark text-light"}`;
@@ -37,14 +38,31 @@ const Saved = () => {
             .then(response => {console.log(response)});
     }
 
+    const handleFormSubmit = (item) => {
+        if(detailedPost.id === "") handleAdd(item);
+        else handleEdit(item);
+        setDetailedPost({creator: "", title: "", publisher: "", date: "", id: ""});
+    }
+
     const handleEdit = (item) => {
-        axios.post(`api/references/edit/${item.id}`, item)
+        axios.post(`api/references/edit/${detailedPost.id}`, item)
             .then(response => {console.log(response)});
+    }
+
+    const handleAdd = (item) => {
+        axios.post("/api/references",
+            {
+                creator: item.creator,
+                title: item.title,
+                publisher: item.publisher,
+                date: item.date,
+            })
+
     }
 
     const trialFunction2 = (item) =>
         (
-            <button onClick={()=> {handleEdit(item)}} className={buttonTheme} >
+            <button onClick={()=> {setDetailedPost(item)}} className={buttonTheme} >
                 <MdEdit />
             </button>
         )
@@ -69,7 +87,7 @@ const Saved = () => {
 
     return (
         <div>
-            <EditForm actOnSubmit={handleEdit} post={detailedPost}/>
+            <EditForm actOnSubmit={handleFormSubmit} post={detailedPost}/>
             <RefHeadline>Saved search</RefHeadline>
             <SearchTable data={backendData} refActions={refActions}/>
         </div>
