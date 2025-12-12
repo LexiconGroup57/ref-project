@@ -15,7 +15,6 @@ const Search = () => {
     const { register, handleSubmit } = useForm();
 
     useEffect(() => {
-        console.log(searchString);
         axios.get(searchString)
             .then(response => {
                 setSearch(response.data.xsearch.list);
@@ -23,15 +22,18 @@ const Search = () => {
     }, [searchString])
 
     const postRecord = (item) => {
+        console.log(checkArray(item.creator));
         axios.post("/api/references",
             {
-                creator: item.creator,
+                creator: checkArray(item.creator),
                 title: item.title,
                 publisher: item.publisher,
                 date: item.date,
-            })
+            });
 
     }
+
+    const checkArray = (post) => Array.isArray(post) ? post : [post];
 
     const actOnSubmit = (data) => {
         let hasForf = data.authorFirstName || data.authorLastName;

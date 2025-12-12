@@ -8,22 +8,22 @@ const SearchTable = ({data, refActions }) => {
         {
             accessorKey: 'creator',
             header: 'Creator',
-            cell: (props) => <p>{props.getValue()}</p>
+            cell: (props) => props.getValue()
         },
         {
             accessorKey: 'title',
             header: 'Title',
-            cell: (props) => <p>{props.getValue()}</p>
+            cell: (props) => props.getValue()
         },
         {
             accessorKey: 'publisher',
             header: 'Publisher',
-            cell: (props) => <p>{props.getValue()}</p>
+            cell: (props) => props.getValue()
         },
         {
             accessorKey: 'date',
             header: 'Date',
-            cell: (props) => <p>{props.getValue()}</p>
+            cell: (props) => props.getValue()
         }
     ]
 

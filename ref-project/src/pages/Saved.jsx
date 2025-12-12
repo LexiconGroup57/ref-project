@@ -45,20 +45,27 @@ const Saved = () => {
     }
 
     const handleEdit = (item) => {
-        axios.post(`api/references/edit/${detailedPost.id}`, item)
+        axios.post(`api/references/edit/${detailedPost.id}`, {
+            creator: checkArray(item.creator),
+            title: item.title,
+            publisher: item.publisher,
+            date: item.date,
+        })
             .then(response => {console.log(response)});
     }
 
     const handleAdd = (item) => {
         axios.post("/api/references",
             {
-                creator: item.creator,
+                creator: checkArray(item.creator),
                 title: item.title,
                 publisher: item.publisher,
                 date: item.date,
             })
 
     }
+
+    const checkArray = (post) => Array.isArray(post) ? post : [post];
 
     const trialFunction2 = (item) =>
         (
